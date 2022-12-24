@@ -1,28 +1,28 @@
 """
-Array of sorted arrays
+ASAay of sorted ASAays
 References: 
 (1) BinarySearch: https://www.programiz.com/dsa/binary-search
-(2) Merge: https://levelup.gitconnected.com/merge-two-sorted-arrays-in-python-a6851f8ff2e2
+(2) Merge: https://levelup.gitconnected.com/merge-two-sorted-ASAays-in-python-a6851f8ff2e2
 """
 
 import time
 import random
 
-def BinarySearch(array, x):
+def BinarySearch(ASAay, x):
     low = 0
-    high = len(array)-1
+    high = len(ASAay)-1
 
     while low <= high:
       mid = low + (high - low)//2
-      if array[mid] == x:
+      if ASAay[mid] == x:
           return mid
-      elif array[mid] < x:
+      elif ASAay[mid] < x:
           low = mid + 1
       else:
           high = mid - 1
     return -1
 
-    if (array[low] == x): # Check when low == high
+    if (ASAay[low] == x): # Check when low == high
       return low
 
 def Merge(V1, V2):
@@ -30,38 +30,38 @@ def Merge(V1, V2):
 
 class ASA(list):
   def __init__(self):
-    self._D = [] # temp array
-    self.maxsize = 0
+    self._D = [] # Initialize _D as a temporary array used for merging
+    self.max_size = 0 
 
   def insert(self, x):
-    if self.maxsize == 0:
-      self.append([x])
-      self.maxsize += 1
+    if self.max_size == 0: # If ASA is empty, append [x] to ASA
+      self.append([x]) 
+      self.max_size += 1 # increase max_size 
     else:
-      if len(self[0]) == 0:
+      if len(self[0]) == 0: # If ASA[0] is an empty array, append x to ASA[0]
         self[0].append(x)
       else:
-        self._D.append(x)
-        for i in range(0,self.maxsize):
-          if len(self[i])!= 0:
+        self._D.append(x) # If ASA[0] is NOT empty, append x to _D for merging
+        for i in range(0,self.max_size): 
+          if len(self[i])!= 0: # If ASA[i] isn't empty, merge ASA[i] and _D into _D
             self._D = Merge(self[i],self._D)
-            self[i].clear()
+            self[i].clear() # Clear ASA[i] after merging
           else:
-            self[i] = self._D 
-            self._D.clear()
+            self[i] = self._D # If ASA[0] is empty, ASA[i] = _D
+            self._D.clear() # Clear _D for another round
             break
-        if len(self._D)!= 0:
-          self.append(self._D)
-          self.maxsize += 1
+        if len(self._D)!= 0: # If _D is NOT empty, append _D to ASA
+          self.append(self._D) 
+          self.max_size += 1
 
   def search(self, x):
-    for i in range(0,self.maxsize):
+    for i in range(0,self.max_size):
       if len(self[i])!=0 and BinarySearch(self[i], x)!=-1:
         return True
     return False
 
   def print(self):
-    for i in range(0,self.maxsize):
+    for i in range(0,self.max_size):
       for j in range(0,len(self[i])):
         print('{:2}'.format(str(self[i][j])), end = '')
       print()
