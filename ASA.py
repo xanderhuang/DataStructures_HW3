@@ -1,5 +1,5 @@
 """
-ASAay of sorted ASAays
+Array of sorted Arrays
 References: 
 (1) BinarySearch: https://www.programiz.com/dsa/binary-search
 (2) Merge: https://levelup.gitconnected.com/merge-two-sorted-ASAays-in-python-a6851f8ff2e2
@@ -8,21 +8,21 @@ References:
 import time
 import random
 
-def BinarySearch(ASAay, x):
+def BinarySearch(Array, x):
     low = 0
-    high = len(ASAay)-1
+    high = len(Array)-1
 
     while low <= high:
       mid = low + (high - low)//2
-      if ASAay[mid] == x:
+      if Array[mid] == x:
           return mid
-      elif ASAay[mid] < x:
+      elif Array[mid] < x:
           low = mid + 1
       else:
           high = mid - 1
     return -1
 
-    if (ASAay[low] == x): # Check when low == high
+    if (Array[low] == x): # Check when low == high
       return low
 
 def Merge(V1, V2):
