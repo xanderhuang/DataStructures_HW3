@@ -3,24 +3,19 @@
 import time
 import random
 
-# Capacity for internal array
-INITIAL_CAPACITY = 50
-
-# Node data structure - essentially a LinkedList node
+# a list of the next prime numbers from 2^10 to 2^30
+primes = [1031, 2053, 4099, 8209, 16411, 32771, 65537, 131101, 262147, 524309, 1048583, 2097169, 4194319, 8388617, 16777259, 33554467, 67108879, 134217757, 268435459, 536870923, 1073741827]
 class Node:
 	def __init__(self, key, value):
 		self.key = key
 		self.value = value
 		self.next = None
-	def __str__(self):
-		return "<Node: (%s, %s), next: %s>" % (self.key, self.value, self.next != None)
-	def __repr__(self):
-		return str(self)
-# Hash table with separate chaining
 class HashTable:
 	# Initialize hash table
-	def __init__(self):
-		self.capacity = INITIAL_CAPACITY
+	def __init__(self, j):
+		self.j = j
+		# Set capacity as the next prime number larger than 2^j
+		self.capacity = primes[j-10]
 		self.size = 0
 		self.buckets = [None]*self.capacity
 	# Generate a hash for a given key
@@ -79,40 +74,12 @@ class HashTable:
 			# Found - return the data value
 			return node.value
 
-	# Remove node stored at key
-	# Input:  key - string
-	# Output: removed data value or None if not found
-	def remove(self, key):
-		# 1. Compute hash
-		index = self.hash(key)
-		node = self.buckets[index]
-		prev = None
-		# 2. Iterate to the requested node
-		while node is not None and node.key != key:
-			prev = node
-			node = node.next
-		# Now, node is either the requested node or none
-		if node is None:
-			# 3. Key not found
-			return None
-		else:
-			# 4. The key was found.
-			self.size -= 1
-			result = node.value
-			# Delete this element in linked list
-			if prev is None:
-				self.buckets[index] = node.next # May be None, or the next match
-			else:
-				prev.next = prev.next.next # LinkedList delete by skipping over
-			# Return the deleted result 
-			return result
-
 if __name__ == '__main__':
   insert_times = []
   search_times = []
   for j in range(10, 31):
     print("{2^"+str(j)+" data}")
-    HT = HashTable()
+    HT = HashTable(j)
     start = time.time()
     for i in range(2**j):
       key = str(random.randint(1, 2**30))
@@ -124,7 +91,7 @@ if __name__ == '__main__':
     print(insert_times)
 
     open = time.time()
-    for i in range(2**j):
+    for i in range(10**5):
       key = str(random.randint(1, 2**30))
       HT.find(key)
     close = time.time()

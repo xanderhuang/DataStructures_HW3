@@ -82,7 +82,7 @@ if __name__ == '__main__':
     print(insert_times)
 
     open = time.time()
-    for i in range(2**j):
+    for i in range(10**5):
         ASA.search(random.randint(1, 2**30))
     close = time.time()
     search_time = round(close - open, 2)
